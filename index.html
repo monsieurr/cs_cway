@@ -10,10 +10,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans:ital,wght@0,400;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink:       #0f1117;
+    --ink:       #18211E;
     --ink-soft:  #3a3f4d;
     --rule:      #d4d8e2;
-    --accent:    #1a211e;
+    --accent:    #18211E;
     --accent-lt: #e6ece9;
     --accent-hi: #b6c9bf;
     --warn:      #c4490f;
@@ -97,10 +97,14 @@
   }
   .cover a {
     color: var(--white);
-    text-decoration: none;
-    border-bottom: 1px solid rgba(255,255,255,.25);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(255,255,255,.35);
   }
-  .cover a:hover { border-bottom-color: rgba(255,255,255,.6); }
+  .cover a:hover {
+    text-decoration-color: var(--white);
+    background: rgba(255,255,255,.08);
+  }
 
   /* BRIEF */
   .brief {
@@ -108,6 +112,7 @@
     border-bottom: 1px solid var(--rule);
     padding: 28px 72px;
   }
+  .brief-inner { max-width: 1100px; margin: 0 auto; }
   .brief-label {
     font-family: var(--mono);
     font-size: .67rem;
@@ -119,13 +124,15 @@
   .brief-text {
     font-size: .95rem;
     color: var(--ink);
-    max-width: 760px;
+    max-width: none;
+    width: 100%;
     line-height: 1.6;
   }
   .brief-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 16px;
+    width: 100%;
   }
   .brief-item {
     background: var(--white);
@@ -204,7 +211,11 @@
   .toc-text { display: flex; flex-direction: column; gap: 2px; }
   .toc-title { font-size: .86rem; color: var(--ink-soft); font-weight: 600; }
   .toc-meta { font-size: .72rem; color: rgba(58,63,77,.7); }
-  .toc-list li a:hover { color: var(--accent); }
+  .toc-list li a:hover {
+    color: var(--accent);
+    background: rgba(24,33,30,.05);
+    border-radius: 6px;
+  }
   .toc-num {
     font-family: var(--mono);
     font-size: .66rem;
@@ -257,6 +268,18 @@
   p { margin-bottom: 1rem; font-size: .95rem; color: var(--ink-soft); }
   p:last-child { margin-bottom: 0; }
   strong { color: var(--ink); font-weight: 600; }
+  a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(24,33,30,.35);
+    transition: color .15s, text-decoration-color .15s, background .15s;
+  }
+  a:hover {
+    color: var(--accent);
+    text-decoration-color: var(--accent);
+    background: rgba(24,33,30,.06);
+  }
 
   h3 {
     font-family: var(--title);
@@ -556,9 +579,6 @@
   <h1>Étude de cas Product Owner<br><em>Pilotage d'un portefeuille produit multi-points d'entrée dans un contexte de traduction IA sécurisée</em></h1>
   <div class="cover-meta">
     <div class="cover-meta-item"><span>Auteur</span><strong>Thomas Lefebvre</strong></div>
-    <div class="cover-meta-item"><span>Périmètre d'ancrage</span><strong>SYSTRAN / Intégrations / Backoffice</strong></div>
-    <div class="cover-meta-item"><span>Format</span><strong>Case study orientée delivery</strong></div>
-    <div class="cover-meta-item"><span>Date</span><strong>Mars 2026</strong></div>
     <div class="cover-meta-item"><span>LinkedIn</span><strong><a href="https://www.linkedin.com/in/thomas-lefebvre-product-impact/">linkedin.com/in/thomas-lefebvre-product-impact</a></strong></div>
     <div class="cover-meta-item"><span>Site</span><strong><a href="https://thomaslfb.eu">thomaslfb.eu</a></strong></div>
   </div>
@@ -566,20 +586,22 @@
 
 <!-- BRIEF 30 SECONDES -->
 <div class="brief">
-  <div class="brief-label">Brief 30 secondes</div>
-  <div class="brief-text">
-    <div class="brief-grid">
-      <div class="brief-item">
-        <span class="brief-kicker">Problème</span>
-        <p>Plutôt qu'une démo IA générique, j'ai choisi un problème opérationnel concret : quand un éditeur SaaS déploie un même produit via plusieurs points d'entrée (applications et intégrations), le pilotage se fragmente.</p>
-      </div>
-      <div class="brief-item">
-        <span class="brief-kicker">Impact</span>
-        <p>Adoption difficile à mesurer, incidents longs à diagnostiquer, administration des licences complexe.</p>
-      </div>
-      <div class="brief-item">
-        <span class="brief-kicker">Réponse</span>
-        <p>Ce document montre comment un Product Owner structure ce périmètre : backlog priorisé, user stories complètes, QA, analytics et conformité. Ancrage : <strong>SYSTRAN by ChapsVision</strong>, produit qui expose déjà ces points d'entrée en conditions réelles.</p>
+  <div class="brief-inner">
+    <div class="brief-label">Brief 30 secondes</div>
+    <div class="brief-text">
+      <div class="brief-grid">
+        <div class="brief-item">
+          <span class="brief-kicker">Problème</span>
+          <p>Plutôt qu'une démo IA générique, j'ai choisi un problème opérationnel concret : quand un éditeur SaaS déploie un même produit via plusieurs points d'entrée (applications et intégrations), le pilotage se fragmente.</p>
+        </div>
+        <div class="brief-item">
+          <span class="brief-kicker">Impact</span>
+          <p>Adoption difficile à mesurer, incidents longs à diagnostiquer, administration des licences complexe.</p>
+        </div>
+        <div class="brief-item">
+          <span class="brief-kicker">Réponse</span>
+          <p>Ce document montre comment un Product Owner structure ce périmètre : backlog priorisé, user stories complètes, QA, analytics et conformité. Ancrage : <strong>SYSTRAN by ChapsVision</strong>, produit qui expose déjà ces points d'entrée en conditions réelles.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -942,7 +964,7 @@
     </div>
 
     <h3>La boucle vertueuse "Support → Backlog"</h3>
-    <p>Le PO n'est pas qu'un concepteur, c'est un opérateur du "Run". Le cycle est court :</p>
+    <p>Mon rôle de PO ne se limite pas à la conception : j'opère aussi le "Run". Le cycle est court :</p>
     <ul class="inline-steps">
       <li><strong>Signalement</strong> (monitoring ou ticket)</li>
       <li><strong>Triage</strong> (isolement du point d'entrée et de la release)</li>
@@ -957,7 +979,7 @@
       <li>Cycles de review/validation Microsoft et Google pour add-ins et add-ons.</li>
       <li>Dépendances OAuth et scopes sur connecteurs tiers (Teams, Slack, ServiceNow, etc.).</li>
       <li>Contraintes de résidence des données et environnements clients régaliens.</li>
-      <li>Canary releases et compatibilité rétro des APIs exposées.</li>
+      <li>Déploiement progressif et compatibilité rétro des APIs exposées.</li>
     </ul>
 
     <h3>Structure standardisée d'une Release Note</h3>
@@ -967,8 +989,9 @@
       <div style="margin-bottom:6px;"><span style="color:#86efac;font-weight:500;">[ NOUVEAU ]</span> &mdash; Add-in Word : Support du glossaire personnalisé du Tenant.</div>
       <div style="margin-bottom:6px;"><span style="color:#fbbf24;font-weight:500;">[ AMÉLIORÉ ]</span> &mdash; Extension Chrome : Temps de réponse backend réduit de 40%.</div>
       <div style="margin-bottom:14px;"><span style="color:#f87171;font-weight:500;">[ CORRIGÉ ]</span> &mdash; API REST : Timeout intermittent sur les PDF supérieurs à 5 Mo.</div>
-      <div style="color:rgba(255,255,255,.4);">Déploiement progressif : 10% &rarr; 50% &rarr; 100% sur 48h (Canary Release).</div>
+      <div style="color:rgba(255,255,255,.4);">Déploiement progressif : 10% &rarr; 50% &rarr; 100% sur 48h.</div>
     </div>
+    <p>Dans un contexte de traduction sécurisée pour des organisations publiques et des institutions, avec des exigences fortes de confidentialité et de fiabilité, le <strong>déploiement progressif</strong> réduit le risque et sécurise la continuité de service.</p>
   </div>
 
   <!-- 09 ANALYTICS -->
@@ -1036,7 +1059,7 @@
     <p>Les actions dites "sensibles" (activation d'un nouveau connecteur tiers, export massif de données, suppression de compte) génèrent un log horodaté et stocké en "Write-Once-Read-Many". Ces logs sont la garantie réclamée par les RSSI lors de l'achat d'une solution SaaS.</p>
 
     <div class="callout callout-warn">
-      <p><strong>Rôle du PO :</strong> Le PO n'est pas un juriste. Son rôle est de travailler main dans la main avec le DPO (Data Protection Officer) pour traduire ces contraintes de conformité austères en <strong>critères d'acceptation techniques et livrables</strong> par les développeurs.</p>
+      <p><strong>Rôle du PO :</strong> Je ne suis pas juriste. Mon rôle est de travailler main dans la main avec le DPO (Data Protection Officer) pour traduire ces contraintes de conformité austères en <strong>critères d'acceptation techniques et livrables</strong> par les développeurs.</p>
     </div>
     <div class="callout callout-note">
       <p><strong>Hors périmètre :</strong> Les maquettes détaillées et prototypes UI ne sont pas inclus dans ce document. L’objectif ici est de cadrer le delivery, la gouvernance et la priorisation produit.</p>
@@ -1046,7 +1069,7 @@
   <!-- 11 ALIGNEMENT -->
   <div class="conclusion" id="s11">
     <h2><span class="section-num">11</span> Pourquoi cette étude de cas répond aux attentes du poste</h2>
-    <p>Ce document n'a pas été généré de manière générique : il a été construit en miroir strict avec la réalité de la fiche de poste et les enjeux connus d'un portefeuille SaaS technique.</p>
+    <p>Ce document est construit en miroir strict avec la réalité de la fiche de poste et les enjeux connus d'un portefeuille SaaS technique.</p>
     <div class="conclusion-grid">
       <div class="conclusion-item">Périmètre <strong>multi-points d'entrée</strong> traité de bout en bout (Add-ins, extensions, connecteurs, API).</div>
       <div class="conclusion-item">Cadrage de <strong>User stories complètes</strong> avec critères de recette précis, et non des idées floues.</div>
@@ -1055,7 +1078,7 @@
       <div class="conclusion-item">Maîtrise du cycle de vie des <strong>Releases</strong>, de la communication au monitoring des régressions.</div>
       <div class="conclusion-item">Intégration native des enjeux complexes de <strong>sécurité, rôles et conformité (Audit Trail)</strong>.</div>
     </div>
-    <p style="margin-top:28px;">Je n'ai pas d'expérience directe dans le développement d'Add-ins Microsoft spécifiques. Je ne le cache pas. Ce que cette étude démontre, c'est ma capacité à <strong>aborder un périmètre technique nouveau</strong> avec la maturité d'un Product Owner expérimenté : partir du besoin, unifier les parcours, structurer le backlog, et piloter l'exécution avec rigueur. C'est la garantie d'une montée en compétence rapide et efficace.</p>
+    <p style="margin-top:28px;">Cette étude illustre une approche Product Owner orientée delivery : partir du besoin, unifier les parcours, structurer le backlog, et piloter l'exécution avec rigueur.</p>
   </div>
 
   <!-- 12 SOURCES -->
@@ -1068,7 +1091,13 @@
       <h3>Sources & Documentation étudiées pour ce cas</h3>
       <ul class="sources-list">
         <li><strong>Écosystème Produit SYSTRAN :</strong> Étude de l'architecture existante de <em><a href="https://www.chapsvision.com/fr/solution/systran-traduction/">SYSTRAN Translate Pro</a></em> (Extensions navigateur, intégrations Microsoft, API REST) pour ancrer le besoin d'unification dans la réalité du groupe.</li>
-        <li><strong>Recherche métier "Enterprise SaaS" :</strong> Consolidation des bonnes pratiques (RBAC, audit trail/WORM, multitenancy, canary releases). Références : <a href="https://csrc.nist.gov/projects/role-based-access-control">NIST RBAC</a>, <a href="https://learn.microsoft.com/azure/architecture/guide/multitenant/overview">Azure Multitenant</a>, <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html">AWS Object Lock</a>, <a href="https://martinfowler.com/bliki/CanaryRelease.html">Martin Fowler Canary Release</a>.</li>
+        <li><strong>Microsoft Office Add-ins :</strong> Documentation officielle <a href="https://learn.microsoft.com/en-us/office/dev/add-ins/">Office Add-ins</a> (Word, Excel, PowerPoint, Outlook).</li>
+        <li><strong>Microsoft Teams Apps :</strong> Documentation développeur <a href="https://learn.microsoft.com/en-us/microsoftteams/platform/">Teams Platform</a> (tabs, bots, message extensions).</li>
+        <li><strong>Google Workspace Add-ons :</strong> Vue d'ensemble <a href="https://developers.google.com/workspace/add-ons/overview">Google Workspace Add-ons</a>.</li>
+        <li><strong>Extensions navigateur :</strong> Docs <a href="https://developer.chrome.com/docs/extensions/">Chrome Extensions</a> et référence <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions">WebExtensions (MDN)</a>.</li>
+        <li><strong>Apps desktop :</strong> Documentation <a href="https://www.electronjs.org/docs/">Electron</a> (Windows, macOS, Linux).</li>
+        <li><strong>Connecteurs Slack :</strong> Docs <a href="https://docs.slack.dev/apis">Slack APIs</a>.</li>
+        <li><strong>Recherche métier "Enterprise SaaS" :</strong> Consolidation des bonnes pratiques (RBAC, audit trail/WORM, multitenancy, déploiement progressif). Références : <a href="https://csrc.nist.gov/projects/role-based-access-control">NIST RBAC</a>, <a href="https://learn.microsoft.com/azure/architecture/guide/multitenant/overview">Azure Multitenant</a>, <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html">AWS Object Lock</a>, <a href="https://martinfowler.com/bliki/CanaryRelease.html">Martin Fowler (déploiement progressif)</a>.</li>
       </ul>
     </div>
   </div>
