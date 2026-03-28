@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Étude de cas Product Owner · ChapsVision</title>
+<!-- Nouvelles polices : Noto Sans pour les titres, Inter pour le texte -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans:ital,wght@0,400;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:       #0f1117;
+    --ink-soft:  #3a3f4d;
+    --rule:      #d4d8e2;
+    --accent:    #1a211e;
+    --accent-lt: #e6ece9;
+    --accent-hi: #b6c9bf;
+    --warn:      #c4490f;
+    --warn-lt:   #fdf0eb;
+    --bg:        #fafaf8;
+    --white:     #ffffff;
+    --mono:      'DM Mono', monospace;
+    --title:     'Noto Sans', sans-serif;
+    --body:      'Inter', sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; scroll-behavior: smooth; }
+  body {
+    font-family: var(--body);
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* COVER */
+  .cover {
+    background: var(--ink);
+    color: var(--white);
+    padding: 72px 72px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    right: -60px; top: -60px;
+    width: 400px; height: 400px;
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .cover-label {
+    font-family: var(--mono);
+    font-size: .7rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.4);
+    margin-bottom: 24px;
+  }
+  .cover h1 {
+    font-family: var(--title);
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1.25;
+    max-width: 700px;
+    margin-bottom: 28px;
+  }
+  .cover h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: rgba(255,255,255,.75);
+  }
+  .cover-meta {
+    display: flex;
+    gap: 48px;
+    margin-top: 44px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255,255,255,.1);
+  }
+  .cover-meta-item {
+    font-family: var(--mono);
+    font-size: .7rem;
+  }
+  .cover-meta-item span {
+    display: block;
+    color: rgba(255,255,255,.3);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .cover-meta-item strong {
+    color: var(--white);
+    font-weight: 500;
+    font-size: .8rem;
+  }
+  .cover a {
+    color: var(--white);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,.25);
+  }
+  .cover a:hover { border-bottom-color: rgba(255,255,255,.6); }
+
+  /* BRIEF */
+  .brief {
+    background: var(--accent-lt);
+    border-bottom: 1px solid var(--rule);
+    padding: 28px 72px;
+  }
+  .brief-label {
+    font-family: var(--mono);
+    font-size: .67rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .brief-text {
+    font-size: .95rem;
+    color: var(--ink);
+    max-width: 760px;
+    line-height: 1.6;
+  }
+  .brief-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .brief-item {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .brief-kicker {
+    font-family: var(--mono);
+    font-size: .65rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .brief-item p { margin: 0; font-size: .88rem; color: var(--ink-soft); }
+
+  /* KEYPOINTS */
+  .keypoints {
+    background: var(--white);
+    border-bottom: 1px solid var(--rule);
+    padding: 20px 72px 28px;
+  }
+  .keypoints-label {
+    font-family: var(--mono);
+    font-size: .67rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+  .keypoints-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .keypoint {
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 14px 16px;
+    background: var(--bg);
+  }
+  .keypoint-title { font-family: var(--title); font-size: .85rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .keypoint-desc { font-size: .8rem; color: var(--ink-soft); line-height: 1.4; }
+
+  /* TOC */
+  .toc {
+    background: var(--white);
+    border-bottom: 1px solid var(--rule);
+    padding: 28px 72px;
+  }
+  .toc-label {
+    font-family: var(--mono);
+    font-size: .67rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+  .toc-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px 40px;
+    list-style: none;
+  }
+  .toc-list li a {
+    text-decoration: none;
+    color: var(--ink-soft);
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    transition: color .15s;
+    font-weight: 500;
+  }
+  .toc-text { display: flex; flex-direction: column; gap: 2px; }
+  .toc-title { font-size: .86rem; color: var(--ink-soft); font-weight: 600; }
+  .toc-meta { font-size: .72rem; color: rgba(58,63,77,.7); }
+  .toc-list li a:hover { color: var(--accent); }
+  .toc-num {
+    font-family: var(--mono);
+    font-size: .66rem;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* LAYOUT */
+  .doc {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 48px 96px;
+  }
+
+  /* SECTION */
+  .section {
+    border-top: 1px solid var(--rule);
+    padding-top: 52px;
+    margin-top: 52px;
+  }
+  .section:first-child { border-top: none; margin-top: 52px; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .section-num {
+    font-family: var(--mono);
+    font-size: .75rem;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: .12em;
+    padding: 4px 8px;
+    background: var(--accent-lt);
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .section h2 {
+    font-family: var(--title);
+    font-weight: 700;
+    font-size: 1.35rem;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+
+  /* TYPOGRAPHY */
+  p { margin-bottom: 1rem; font-size: .95rem; color: var(--ink-soft); }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--ink); font-weight: 600; }
+
+  h3 {
+    font-family: var(--title);
+    font-size: .85rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-top: 32px;
+    margin-bottom: 14px;
+  }
+  h3:first-child { margin-top: 0; }
+
+  /* CALLOUT */
+  .callout {
+    background: var(--accent-lt);
+    border-left: 4px solid var(--accent);
+    padding: 18px 22px;
+    border-radius: 0 6px 6px 0;
+    margin: 24px 0;
+  }
+  .callout p { color: var(--ink); font-size: .92rem; margin: 0; }
+  .callout-warn { background: var(--warn-lt); border-left-color: var(--warn); }
+  .callout-note { background: #f3f4f6; border-left-color: #9ca3af; }
+
+  /* TABLES */
+  table { width: 100%; border-collapse: collapse; font-size: .9rem; margin: 20px 0; }
+  th {
+    text-align: left;
+    font-weight: 600;
+    font-size: .75rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    border-bottom: 2px solid var(--rule);
+    padding: 10px 14px 12px;
+  }
+  td { padding: 12px 14px; border-bottom: 1px solid var(--rule); color: var(--ink-soft); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  td strong { color: var(--ink); }
+
+  /* PERSONAS */
+  .personas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .persona {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+  }
+  .persona-name { font-family: var(--title); font-weight: 700; font-size: .9rem; color: var(--ink); margin-bottom: 6px; }
+  .persona-desc { font-size: .82rem; color: var(--ink-soft); line-height: 1.5; }
+
+  /* BACKLOG */
+  .backlog { margin: 20px 0; }
+  .backlog-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .backlog-item:last-child { border-bottom: none; }
+  .backlog-rank { font-family: var(--mono); font-size: .7rem; font-weight: 500; color: var(--accent); min-width: 30px; padding-top: 2px; }
+  .backlog-text { font-size: .9rem; color: var(--ink-soft); flex: 1; }
+  .backlog-text strong { color: var(--ink); font-weight: 600; }
+  .tag {
+    font-family: var(--mono);
+    font-size: .65rem;
+    font-weight: 500;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    border-radius: 4px;
+    padding: 3px 8px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .tag-admin      { background: #eef2ff; color: #3730a3; }
+  .tag-analytics  { background: #f0fdf4; color: #166534; }
+  .tag-support    { background: #fff7ed; color: #c2410c; }
+  .tag-release    { background: #f5f3ff; color: #7c3aed; }
+  .tag-conformite { background: #fef9c3; color: #854d0e; }
+
+  /* USER STORIES */
+  .story {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+  }
+  .story-id { font-family: var(--mono); font-size: .7rem; font-weight: 500; color: var(--accent); margin-bottom: 12px; }
+  .story h4 { font-family: var(--title); font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; }
+  .story-statement {
+    font-size: .9rem;
+    color: var(--ink-soft);
+    font-style: italic;
+    border-left: 3px solid var(--rule);
+    padding-left: 16px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  .story-ac h5 {
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .story-ac ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .story-ac li { display: flex; gap: 12px; font-size: .88rem; color: var(--ink-soft); }
+  .story-ac li::before { content: 'ok'; font-family: var(--mono); font-size: .65rem; font-weight: 500; color: var(--accent); flex-shrink: 0; margin-top: 4px; }
+
+  .inline-steps {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    margin: 12px 0 0;
+    padding: 0;
+  }
+  .inline-steps li {
+    font-size: .85rem;
+    color: var(--ink-soft);
+    background: var(--accent-lt);
+    padding: 6px 10px;
+    border-radius: 6px;
+  }
+
+  /* PHASES */
+  .phases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 20px 0; }
+  .phase { border: 1px solid var(--rule); border-radius: 8px; padding: 20px; background: var(--white); }
+  .phase-label { font-family: var(--mono); font-size: .7rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 14px; }
+  .phase-mvp .phase-label { color: var(--accent); }
+  .phase-v1  .phase-label { color: #7c3aed; }
+  .phase-v2  .phase-label { color: var(--ink-soft); }
+  .phase ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .phase li { font-size: .85rem; color: var(--ink-soft); padding-left: 14px; position: relative; }
+  .phase li::before { content: '→'; font-family: var(--mono); position: absolute; left: 0; color: var(--rule); font-size: .8rem; }
+
+  /* KPIs */
+  .kpis { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin: 20px 0; }
+  .kpi { background: var(--white); border: 1px solid var(--rule); border-radius: 8px; padding: 16px 18px; }
+  .kpi-name { font-family: var(--title); font-size: .85rem; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+  .kpi-desc { font-size: .8rem; color: var(--ink-soft); line-height: 1.5; }
+
+  /* EVENTS */
+  .events { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+  .event { font-family: var(--mono); font-size: .75rem; background: var(--ink); color: rgba(255,255,255,.9); padding: 4px 10px; border-radius: 4px; }
+
+  /* QA GRID */
+  .qa-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 20px 0;
+    font-size: .88rem;
+    background: var(--white);
+  }
+  .qa-grid > div { padding: 12px 16px; border-bottom: 1px solid var(--rule); }
+  .qa-grid > div:nth-last-child(-n+3) { border-bottom: none; }
+  .qa-head { font-weight: 700; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); background: var(--bg); }
+  .qa-parcours { color: var(--ink); font-weight: 500; }
+
+  .risk-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 14px 0 0;
+    padding: 0;
+  }
+  .risk-list li {
+    font-size: .88rem;
+    color: var(--ink-soft);
+    padding-left: 16px;
+    position: relative;
+  }
+  .risk-list li::before {
+    content: '→';
+    font-family: var(--mono);
+    position: absolute;
+    left: 0;
+    color: var(--rule);
+  }
+
+
+  /* CONCLUSION / ALIGNEMENT */
+  .conclusion {
+    background: var(--ink);
+    color: var(--white);
+    padding: 48px 56px;
+    margin-top: 64px;
+    border-radius: 12px;
+  }
+  .conclusion h2 {
+    font-family: var(--title);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .conclusion .section-num {
+    background: rgba(255,255,255,.12);
+    color: var(--accent-hi);
+  }
+  .conclusion strong { color: var(--white); }
+  .conclusion p { color: rgba(255,255,255,.88); font-size: .95rem; line-height: 1.65; }
+  .conclusion-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 28px; }
+  .conclusion-item {
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-size: .85rem;
+    color: rgba(255,255,255,.92);
+    line-height: 1.5;
+  }
+  .conclusion-item::before { content: 'ok  '; font-family: var(--mono); font-size: .7rem; color: var(--accent-hi); }
+
+  /* SOURCES */
+  .sources-box {
+    margin-top: 48px;
+    padding: 24px;
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+  }
+  .sources-box h3 { margin-top: 0; color: var(--ink-soft); font-size: .8rem;}
+  .sources-list { list-style: none; }
+  .sources-list li {
+    font-size: .85rem;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+    padding-left: 16px;
+    position: relative;
+  }
+  .sources-list li::before {
+    content: '→';
+    font-family: var(--mono);
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+  code {
+    font-family: var(--mono);
+    font-size: .8rem;
+    background: var(--accent-lt);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--accent);
+  }
+
+  @media (max-width: 900px) {
+    .cover { padding: 56px 40px; }
+    .cover-meta { flex-wrap: wrap; gap: 24px; }
+    .brief, .toc, .keypoints { padding: 24px 40px; }
+    .brief-grid { grid-template-columns: 1fr; }
+    .keypoints-grid { grid-template-columns: repeat(2, 1fr); }
+    .toc-list { grid-template-columns: 1fr; }
+    .doc { padding: 0 32px 80px; }
+    .phases { grid-template-columns: 1fr; }
+    .conclusion-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    .cover { padding: 48px 28px; }
+    .brief, .toc, .keypoints { padding: 20px 28px; }
+    .keypoints-grid { grid-template-columns: 1fr; }
+    .doc { padding: 0 24px 64px; }
+  }
+
+  @media print {
+    .cover { padding: 48px; }
+    .brief, .toc, .keypoints { padding: 20px 48px; }
+    body { background: white; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-label">Candidature Product Owner · ChapsVision · Montpellier · Mars 2026</div>
+  <h1>Étude de cas Product Owner<br><em>Pilotage d'un portefeuille produit multi-points d'entrée dans un contexte de traduction IA sécurisée</em></h1>
+  <div class="cover-meta">
+    <div class="cover-meta-item"><span>Auteur</span><strong>Thomas Lefebvre</strong></div>
+    <div class="cover-meta-item"><span>Périmètre d'ancrage</span><strong>SYSTRAN / Intégrations / Backoffice</strong></div>
+    <div class="cover-meta-item"><span>Format</span><strong>Case study orientée delivery</strong></div>
+    <div class="cover-meta-item"><span>Date</span><strong>Mars 2026</strong></div>
+    <div class="cover-meta-item"><span>LinkedIn</span><strong><a href="https://www.linkedin.com/in/thomas-lefebvre-product-impact/">linkedin.com/in/thomas-lefebvre-product-impact</a></strong></div>
+    <div class="cover-meta-item"><span>Site</span><strong><a href="https://thomaslfb.eu">thomaslfb.eu</a></strong></div>
+  </div>
+</div>
+
+<!-- BRIEF 30 SECONDES -->
+<div class="brief">
+  <div class="brief-label">Brief 30 secondes</div>
+  <div class="brief-text">
+    <div class="brief-grid">
+      <div class="brief-item">
+        <span class="brief-kicker">Problème</span>
+        <p>Plutôt qu'une démo IA générique, j'ai choisi un problème opérationnel concret : quand un éditeur SaaS déploie un même produit via plusieurs points d'entrée (applications et intégrations), le pilotage se fragmente.</p>
+      </div>
+      <div class="brief-item">
+        <span class="brief-kicker">Impact</span>
+        <p>Adoption difficile à mesurer, incidents longs à diagnostiquer, administration des licences complexe.</p>
+      </div>
+      <div class="brief-item">
+        <span class="brief-kicker">Réponse</span>
+        <p>Ce document montre comment un Product Owner structure ce périmètre : backlog priorisé, user stories complètes, QA, analytics et conformité. Ancrage : <strong>SYSTRAN by ChapsVision</strong>, produit qui expose déjà ces points d'entrée en conditions réelles.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- POINTS CLEFS -->
+<div class="keypoints">
+  <div class="keypoints-label">Points clés</div>
+  <div class="keypoints-grid">
+    <div class="keypoint">
+      <div class="keypoint-title">Pilotage unifié</div>
+      <div class="keypoint-desc">Licences, adoption, incidents et releases dans un backoffice commun.</div>
+    </div>
+    <div class="keypoint">
+      <div class="keypoint-title">Delivery concret</div>
+      <div class="keypoint-desc">Backlog priorisé et user stories prêtes à livrer.</div>
+    </div>
+    <div class="keypoint">
+      <div class="keypoint-title">Run & Qualité</div>
+      <div class="keypoint-desc">QA, support et release notes intégrés dès le MVP.</div>
+    </div>
+    <div class="keypoint">
+      <div class="keypoint-title">Conformité</div>
+      <div class="keypoint-desc">RBAC, audit trail et gouvernance multi-tenant.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SOMMAIRE -->
+<div class="toc">
+  <div class="toc-label">Sommaire</div>
+  <ul class="toc-list">
+    <li><a href="#s1"><span class="toc-num">01</span><span class="toc-text"><span class="toc-title">Contexte</span><span class="toc-meta">Cadre & enjeux</span></span></a></li>
+    <li><a href="#s2"><span class="toc-num">02</span><span class="toc-text"><span class="toc-title">Problème ciblé</span><span class="toc-meta">Douleurs & impact</span></span></a></li>
+    <li><a href="#s3"><span class="toc-num">03</span><span class="toc-text"><span class="toc-title">Utilisateurs et prenantes</span><span class="toc-meta">Personas clés</span></span></a></li>
+    <li><a href="#s4"><span class="toc-num">04</span><span class="toc-text"><span class="toc-title">Solution proposée</span><span class="toc-meta">Backoffice unifié</span></span></a></li>
+    <li><a href="#s5"><span class="toc-num">05</span><span class="toc-text"><span class="toc-title">Découpage MVP / V1 / V2</span><span class="toc-meta">Phasage</span></span></a></li>
+    <li><a href="#s6"><span class="toc-num">06</span><span class="toc-text"><span class="toc-title">Backlog priorisé</span><span class="toc-meta">Top 10</span></span></a></li>
+    <li><a href="#s7"><span class="toc-num">07</span><span class="toc-text"><span class="toc-title">User stories</span><span class="toc-meta">Critères d'acceptation</span></span></a></li>
+    <li><a href="#s8"><span class="toc-num">08</span><span class="toc-text"><span class="toc-title">QA, release et support</span><span class="toc-meta">Run & qualité</span></span></a></li>
+    <li><a href="#s9"><span class="toc-num">09</span><span class="toc-text"><span class="toc-title">Analytics et reporting</span><span class="toc-meta">KPIs & events</span></span></a></li>
+    <li><a href="#s10"><span class="toc-num">10</span><span class="toc-text"><span class="toc-title">Conformité et sécurité</span><span class="toc-meta">RBAC & audit</span></span></a></li>
+    <li><a href="#s11"><span class="toc-num">11</span><span class="toc-text"><span class="toc-title">Alignement avec le poste</span><span class="toc-meta">Fit & valeur</span></span></a></li>
+  </ul>
+</div>
+
+<!-- DOC -->
+<div class="doc">
+
+  <!-- 01 CONTEXTE -->
+  <div class="section" id="s1">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <h2>Contexte</h2>
+    </div>
+    <p>Un éditeur comme ChapsVision distribue ses produits sur <strong>plusieurs points d'entrée (applications et intégrations)</strong> : add-ins Word et Outlook, add-ons Google Workspace, extensions Chrome/Firefox, connecteurs Teams/Slack/ServiceNow, application desktop (Electron), API REST, interface web d'administration. C'est une excellente stratégie commerciale : les utilisateurs accèdent à l'outil de traduction sécurisé directement là où ils travaillent déjà.</p>
+    <p>Cependant, à mesure que le nombre d'intégrations augmente, la <strong>lisibilité produit baisse</strong>. Chaque point d'entrée a ses propres logs, ses propres métriques, et ses propres cycles de déploiement. Pour l'équipe produit, le support technique et les administrateurs clients, cela crée des <strong>frictions opérationnelles concrètes</strong> :</p>
+    <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:8px;margin:16px 0 20px;">
+      <li style="font-size:.92rem;color:var(--ink-soft);padding-left:20px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);font-weight:bold;">→</span>On ne sait pas <strong>quels points d'entrée sont réellement utilisés</strong> et par qui.</li>
+      <li style="font-size:.92rem;color:var(--ink-soft);padding-left:20px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);font-weight:bold;">→</span>Quand un incident survient, identifier le point d'entrée exact et la release concernée <strong>prend trop de temps</strong>.</li>
+      <li style="font-size:.92rem;color:var(--ink-soft);padding-left:20px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);font-weight:bold;">→</span>Gérer les licences et les droits d'accès sur plusieurs points d'entrée est <strong>fastidieux pour les admins clients</strong>.</li>
+      <li style="font-size:.92rem;color:var(--ink-soft);padding-left:20px;position:relative;"><span style="position:absolute;left:0;color:var(--accent);font-weight:bold;">→</span>Le PO n'a pas de <strong>données fiables pour évaluer l'impact</strong> d'une release sur l'usage réel.</li>
+    </ul>
+  </div>
+
+  <!-- 02 PROBLÈME -->
+  <div class="section" id="s2">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <h2>Problème ciblé</h2>
+    </div>
+    <div class="callout">
+      <p><strong>Les produits sont distribués sur plusieurs points d'entrée, mais le pilotage de l'adoption, des licences, des incidents et des releases reste fragmenté.</strong> Résultat : la priorisation produit est moins précise, le support plus lent, et l'onboarding des nouveaux clients plus complexe qu'il ne devrait l'être.</p>
+    </div>
+    <p>Trois douleurs majeures reviennent régulièrement dans ce type d'architecture SaaS :</p>
+    <table>
+      <thead>
+        <tr><th>Douleur identifiée</th><th>Qui en souffre ?</th><th>Conséquence directe</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Adoption non mesurée par point d'entrée</strong></td>
+          <td>PO, Direction Produit</td>
+          <td>Roadmap construite sur des <strong>suppositions plutôt que des données</strong>.</td>
+        </tr>
+        <tr>
+          <td><strong>Diagnostic d'incident lent</strong></td>
+          <td>Support, QA</td>
+          <td><strong>Temps de résolution (MTTR) élevé</strong>, clients frustrés.</td>
+        </tr>
+        <tr>
+          <td><strong>Administration morcelée</strong></td>
+          <td>Admin Client (Tenant)</td>
+          <td>Onboarding laborieux, <strong>risque de dérive de sécurité</strong> sur les accès.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 03 PARTIES PRENANTES -->
+  <div class="section" id="s3">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <h2>Utilisateurs et parties prenantes</h2>
+    </div>
+    <div class="personas">
+      <div class="persona">
+        <div class="persona-name">Admin client</div>
+        <div class="persona-desc">Gère les licences, les rôles et l'activation des points d'entrée pour son organisation. <strong>Premier touché par la complexité</strong> d'administration.</div>
+      </div>
+      <div class="persona">
+        <div class="persona-name">Utilisateur final</div>
+        <div class="persona-desc">Traduit des documents dans Word, Outlook ou son navigateur. S'attend à une <strong>expérience fluide et cohérente</strong> d'un point d'entrée à l'autre.</div>
+      </div>
+      <div class="persona">
+        <div class="persona-name">Support fonctionnel</div>
+        <div class="persona-desc">Investigue les incidents. A besoin de <strong>croiser rapidement le point d'entrée, la release et les logs</strong>.</div>
+      </div>
+      <div class="persona">
+        <div class="persona-name">Product Owner</div>
+        <div class="persona-desc">Pilote le backlog. A besoin de <strong>données fiables segmentées par point d'entrée</strong> et par tenant pour décider.</div>
+      </div>
+      <div class="persona">
+        <div class="persona-name">Ingénieur QA</div>
+        <div class="persona-desc">Valide les parcours. A besoin d'une liste des chemins à tester et d'une <strong>vision claire des risques par déploiement</strong>.</div>
+      </div>
+      <div class="persona">
+        <div class="persona-name">Sécurité / Conformité</div>
+        <div class="persona-desc">Vérifie l'auditabilité. Acteur clé pour les <strong>clients régaliens et les données sensibles</strong>.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 SOLUTION -->
+  <div class="section" id="s4">
+    <div class="section-header">
+      <div class="section-num">04</div>
+      <h2>Solution proposée</h2>
+    </div>
+    <p>La réponse n'est pas de créer un nouveau produit gadget. C'est de structurer le <strong>backoffice existant</strong> pour offrir un espace de pilotage unifié consolidant ce qui est aujourd'hui éparpillé.</p>
+    <div class="callout">
+      <p><strong>Un espace d'administration transverse unifié couvrant :</strong> la gestion centralisée des licences, l'activation des connecteurs par tenant, le suivi d'usage granulaire, la corrélation des incidents avec les releases, et l'auditabilité de la conformité.</p>
+    </div>
+    <p>La solution se découpe en cinq briques fonctionnelles, complémentaires et indépendantes dans leur déploiement :</p>
+    <table>
+      <thead>
+        <tr><th>Brique</th><th>Périmètre couvert</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Admin central</strong></td><td>Utilisateurs, gestion des rôles (RBAC), licences, <strong>activation des points d'entrée par tenant</strong>.</td></tr>
+        <tr><td><strong>Points d'entrée et connecteurs</strong></td><td>Add-ins Microsoft Office, add-ons Google Workspace, extensions Chrome/Firefox, connecteurs Teams/Slack/ServiceNow, app desktop Electron.</td></tr>
+        <tr><td><strong>Usage et performance</strong></td><td>Adoption croisée par point d'entrée, remontée d'erreurs, <strong>time-to-first-value</strong>.</td></tr>
+        <tr><td><strong>Release et qualité</strong></td><td>Changelog centralisé, release notes, <strong>statut de déploiement par environnement</strong>.</td></tr>
+        <tr><td><strong>Conformité</strong></td><td>Journal d'audit inaltérable, permissions différenciées, <strong>traçabilité des exports</strong>.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 05 ROADMAP -->
+  <div class="section" id="s5">
+    <div class="section-header">
+      <div class="section-num">05</div>
+      <h2>Découpage MVP / V1 / V2</h2>
+    </div>
+    <p>Le MVP cible les trois <strong>profils les plus impactés</strong> (Admin client, Support, PO) avec les fonctions strictes nécessaires pour <strong>réduire immédiatement les trois douleurs</strong> identifiées plus haut.</p>
+    <div class="phases">
+      <div class="phase phase-mvp">
+        <div class="phase-label">MVP (Focus Pilotage)</div>
+        <ul>
+          <li>Dashboard de l'usage par point d'entrée</li>
+          <li>Vue centralisée des licences par équipe</li>
+          <li>Vue des incidents croisée avec la release</li>
+          <li>Centre de publication des release notes</li>
+          <li>Activation/désactivation d'un connecteur</li>
+          <li>Journal d'audit basique (logs admin)</li>
+        </ul>
+      </div>
+      <div class="phase phase-v1">
+        <div class="phase-label">V1 (Focus Data)</div>
+        <ul>
+          <li>Alertes sur seuils critiques d'erreurs</li>
+          <li>Comparaison d'adoption avant/après release</li>
+          <li>Vue comparative par client/tenant</li>
+          <li>Granularité fine des permissions (RBAC)</li>
+          <li>Localisation des fonctionnalités (langue UI / formats)</li>
+          <li>Export des rapports d'usage (CSV/PDF)</li>
+        </ul>
+      </div>
+      <div class="phase phase-v2">
+        <div class="phase-label">V2 (Focus Proactif)</div>
+        <ul>
+          <li>Détection automatisée d'anomalies d'usage</li>
+          <li>Recommandations support proactives</li>
+          <li>Pilotage affiné des APIs tierces</li>
+          <li>Règles de localisation avancées par tenant</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 06 BACKLOG -->
+  <div class="section" id="s6">
+    <div class="section-header">
+      <div class="section-num">06</div>
+      <h2>Backlog priorisé (Extrait)</h2>
+    </div>
+    <p>Voici les dix items prioritaires du backlog, classés par <strong>impact direct sur le delivery et l'exploitation</strong>. Les items 1 à 6 constituent le périmètre du MVP.</p>
+    <div class="backlog">
+      <div class="backlog-item">
+        <div class="backlog-rank">#01</div>
+        <div class="backlog-text"><strong>Vue licences par produit et point d'entrée</strong> (alloué / utilisé) avec signalement des comptes inactifs &gt; 30 jours.</div>
+        <span class="tag tag-admin">Admin</span>
+      </div>
+      <div class="backlog-item">
+        <div class="backlog-rank">#02</div>
+        <div class="backlog-text"><strong>Suivi des utilisateurs actifs par point d'entrée</strong> avec segmentation par tenant pour repérer les intégrations sous-utilisées.</div>
+        <span class="tag tag-analytics">Analytics</span>
+      </div>
+      <div class="backlog-item">
+        <div class="backlog-rank">#03</div>
+        <div class="backlog-text"><strong>Incidents récents</strong> : point d'entrée touché, sévérité, dernière release déployée, lien Jira.</div>
+        <span class="tag tag-support">Support</span>
+      </div>
+      <div class="backlog-item">
+        <div class="backlog-rank">#04</div>
+        <div class="backlog-text"><strong>Activer / désactiver un connecteur tiers (ex: Teams)</strong> pour un tenant, avec confirmation et trace dans l'audit log.</div>
+        <span class="tag tag-admin">Admin</span>
+      </div>
+      <div class="backlog-item">
+        <div class="backlog-rank">#05</div>
+        <div class="backlog-text"><strong>Publier et historiser les release notes</strong> : versioning, points d'entrée concernés, statut de déploiement.</div>
+        <span class="tag tag-release">Release</span>
+      </div>
+      <div class="backlog-item">
+        <div class="backlog-rank">#06</div>
+        <div class="backlog-text"><strong>Comparer les taux d'erreurs post-release</strong> (J, J+1, J+7) pour détecter les régressions.</div>
+        <span class="tag tag-release">Release</span>
+      </div>
+      <div class="backlog-item">
+        <div class="backlog-rank">#07</div>
+        <div class="backlog-text"><strong>Identifier les tenants à faible adoption</strong> avec signal d'alerte pour l'équipe CSM.</div>
+        <span class="tag tag-analytics">Analytics</span>
+      </div>
+      <div class="backlog-item">
+        <div class="backlog-rank">#08</div>
+        <div class="backlog-text"><strong>Exporter un rapport d'usage par client</strong> par période et intégration (CSV / PDF).</div>
+        <span class="tag tag-admin">Admin</span>
+      </div>
+      <div class="backlog-item">
+        <div class="backlog-rank">#09</div>
+        <div class="backlog-text"><strong>Comparer l'adoption avant / après release</strong> pour valider la valeur délivrée.</div>
+        <span class="tag tag-analytics">Analytics</span>
+      </div>
+      <div class="backlog-item">
+        <div class="backlog-rank">#10</div>
+        <div class="backlog-text"><strong>Journal d'audit sécurité</strong> : actions sensibles tracées, inaltérables, filtrables.</div>
+        <span class="tag tag-conformite">Conformité</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 07 USER STORIES -->
+  <div class="section" id="s7">
+    <div class="section-header">
+      <div class="section-num">07</div>
+      <h2>Détail des User Stories</h2>
+    </div>
+
+    <div class="story">
+      <div class="story-id">US-01 · Admin · Gestion des licences</div>
+      <h4>Consulter l'état des licences par point d'entrée</h4>
+      <div class="story-statement">
+        En tant qu'<strong>admin client</strong>, je veux consulter l'état des licences par point d'entrée et par équipe pour comprendre quelles intégrations sont réellement utilisées et ajuster les accès si besoin.
+      </div>
+      <div class="story-ac">
+        <h5>Critères d'acceptation</h5>
+        <ul>
+          <li>Je vois le nombre de licences allouées vs. utilisées par intégration (Add-in, Chrome, API).</li>
+          <li>Je peux filtrer ces données par équipe au sein de mon organisation (Tenant).</li>
+          <li>Les comptes inactifs (0 appel API / 0 traduction) depuis plus de 30 jours sont signalés visuellement.</li>
+          <li>Les données affichées sont rafraîchies à J-1 maximum.</li>
+          <li><strong>Sécurité :</strong> Un compte n'ayant pas le rôle "Admin" ne peut pas accéder à cette vue.</li>
+          <li>Un bouton d'export CSV est fonctionnel sur la vue filtrée.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="story">
+      <div class="story-id">US-02 · Support · Résolution d'incident</div>
+      <h4>Diagnostiquer le point d'entrée affecté par un incident</h4>
+      <div class="story-statement">
+        En tant qu'<strong>agent du support technique</strong>, je veux identifier immédiatement si un incident touche une point d'entrée précis ou une release récente afin de réduire le temps de diagnostic (MTTR).
+      </div>
+      <div class="story-ac">
+        <h5>Critères d'acceptation</h5>
+        <ul>
+          <li>Je vois la date et l'heure exactes de début du pic d'erreurs.</li>
+          <li>L'interface isole la ou les points d'entrée impactés (ex: uniquement l'Add-in Outlook).</li>
+          <li>Le système affiche la <strong>version de la dernière release déployée</strong> sur cette point d'entrée spécifique.</li>
+          <li>Je peux filtrer la vue par niveau de sévérité (Critique, Majeur, Mineur).</li>
+          <li>Un lien hypertexte me permet de basculer vers la Release Note correspondante.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="story">
+      <div class="story-id">US-03 · PO · Mesure de la valeur</div>
+      <h4>Suivre l'adoption post-release</h4>
+      <div class="story-statement">
+        En tant que <strong>Product Owner</strong>, je veux suivre l'adoption des nouvelles fonctionnalités par point d'entrée afin de prioriser mon backlog avec des <strong>données réelles</strong>, et non des suppositions.
+      </div>
+      <div class="story-ac">
+        <h5>Critères d'acceptation</h5>
+        <ul>
+          <li>Je visualise la courbe des Utilisateurs Actifs (MAU/WAU) par intégration sur une période sélectionnable.</li>
+          <li>Un marqueur visuel indique la date de chaque release majeure sur le graphique d'adoption.</li>
+          <li>Je peux isoler et comparer le comportement d'adoption entre différents Tenants.</li>
+          <li><strong>Gouvernance :</strong> L'isolation des données entre Tenants (Multitenancy) est strictement respectée dans la requête backend.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 08 QA RELEASE SUPPORT -->
+  <div class="section" id="s8">
+    <div class="section-header">
+      <div class="section-num">08</div>
+      <h2>QA, Release et Support</h2>
+    </div>
+
+    <h3>Parcours critiques à valider par la QA avant chaque release</h3>
+    <div class="qa-grid">
+      <div class="qa-head">Parcours testé</div>
+      <div class="qa-head">Type de test</div>
+      <div class="qa-head">Sévérité</div>
+
+      <div class="qa-parcours">Création et activation d'une licence (nouveau Tenant)</div>
+      <div>Smoke / Fonctionnel</div>
+      <div>Critique</div>
+
+      <div class="qa-parcours">Première traduction via l'Add-in Word ou Outlook</div>
+      <div>E2E (End-to-End)</div>
+      <div>Critique</div>
+
+      <div class="qa-parcours">Handshake et configuration d'un connecteur Teams</div>
+      <div>Intégration tierce</div>
+      <div>Majeur</div>
+
+      <div class="qa-parcours">Tentative d'accès Admin avec des droits de "Viewer"</div>
+      <div>Sécurité / RBAC</div>
+      <div>Critique</div>
+
+      <div class="qa-parcours">Génération et affichage des KPIs d'usage backend</div>
+      <div>Data / Fonctionnel</div>
+      <div>Majeur</div>
+
+      <div class="qa-parcours">Export de l'Audit Trail en PDF</div>
+      <div>Conformité</div>
+      <div>Mineur</div>
+    </div>
+
+    <h3>La boucle vertueuse "Support → Backlog"</h3>
+    <p>Le PO n'est pas qu'un concepteur, c'est un opérateur du "Run". Le cycle est court :</p>
+    <ul class="inline-steps">
+      <li><strong>Signalement</strong> (monitoring ou ticket)</li>
+      <li><strong>Triage</strong> (isolement du point d'entrée et de la release)</li>
+      <li><strong>Diagnostic</strong></li>
+      <li><strong>Résolution</strong></li>
+      <li><strong>Retour au Backlog</strong></li>
+    </ul>
+    <p>Chaque incident alimente la priorisation pour réduire la dette technique ou corriger l'UX quand l'erreur vient d'un mauvais usage.</p>
+
+    <h3>Risques & dépendances (à intégrer au delivery)</h3>
+    <ul class="risk-list">
+      <li>Cycles de review/validation Microsoft et Google pour add-ins et add-ons.</li>
+      <li>Dépendances OAuth et scopes sur connecteurs tiers (Teams, Slack, ServiceNow, etc.).</li>
+      <li>Contraintes de résidence des données et environnements clients régaliens.</li>
+      <li>Canary releases et compatibilité rétro des APIs exposées.</li>
+    </ul>
+
+    <h3>Structure standardisée d'une Release Note</h3>
+    <div style="background:var(--ink);color:var(--white);border-radius:8px;padding:20px 24px;font-family:var(--mono);font-size:.8rem;line-height:1.75;margin:16px 0;">
+      <div style="color:rgba(255,255,255,.4);margin-bottom:8px;">SYSTRAN Translate &mdash; Release 4.12.1 &mdash; 2026-03-20</div>
+      <div style="color:var(--accent-hi);margin-bottom:14px;font-weight:500;">Points d'entrée impactés : Add-in Word &middot; Extension Chrome &middot; API REST</div>
+      <div style="margin-bottom:6px;"><span style="color:#86efac;font-weight:500;">[ NOUVEAU ]</span> &mdash; Add-in Word : Support du glossaire personnalisé du Tenant.</div>
+      <div style="margin-bottom:6px;"><span style="color:#fbbf24;font-weight:500;">[ AMÉLIORÉ ]</span> &mdash; Extension Chrome : Temps de réponse backend réduit de 40%.</div>
+      <div style="margin-bottom:14px;"><span style="color:#f87171;font-weight:500;">[ CORRIGÉ ]</span> &mdash; API REST : Timeout intermittent sur les PDF supérieurs à 5 Mo.</div>
+      <div style="color:rgba(255,255,255,.4);">Déploiement progressif : 10% &rarr; 50% &rarr; 100% sur 48h (Canary Release).</div>
+    </div>
+  </div>
+
+  <!-- 09 ANALYTICS -->
+  <div class="section" id="s9">
+    <div class="section-header">
+      <div class="section-num">09</div>
+      <h2>Analytics et Tagging Plan</h2>
+    </div>
+
+    <h3>KPIs prioritaires pour le pilotage SaaS</h3>
+    <div class="kpis">
+      <div class="kpi">
+        <div class="kpi-name">Activation Rate</div>
+        <div class="kpi-desc">Pourcentage de licences assignées ayant au moins une session active dans les 14 jours.</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-name">Time-to-first-value</div>
+        <div class="kpi-desc">Délai mesuré entre la création du compte et la toute première traduction finalisée.</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-name">Active Users / Point d'entrée</div>
+        <div class="kpi-desc">Métriques MAU/WAU segmentées par point d'entrée (Add-in, Chrome, API).</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-name">Error Rate / Release</div>
+        <div class="kpi-desc">Pourcentage de requêtes échouées, isolé sur les 48h suivant un déploiement.</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-name">Tickets / 100 Accounts</div>
+        <div class="kpi-desc">Indicateur de la "douleur" générée, corrélé pour détecter les features mal comprises.</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-name">Connector Setup Rate</div>
+        <div class="kpi-desc">Proportion de Tenants ayant réussi la configuration de Teams/Slack post-onboarding.</div>
+      </div>
+    </div>
+
+    <h3>Taxonomie événementielle (Tracking)</h3>
+    <p>Ces événements forment la base des tableaux de bord Analytics. Pour garantir la qualité de la donnée, chaque événement embarque obligatoirement les dimensions <code>tenant_id</code>, <code>entry_point_type</code>, <code>release_version</code>, et <code>user_role</code>.</p>
+    <div class="events">
+      <span class="event">license_assigned</span>
+      <span class="event">entry_point_activated</span>
+      <span class="event">addin_installed</span>
+      <span class="event">first_translation_completed</span>
+      <span class="event">connector_configured</span>
+      <span class="event">connector_sync_failed</span>
+      <span class="event">release_note_viewed</span>
+      <span class="event">incident_reported</span>
+      <span class="event">admin_export_generated</span>
+    </div>
+  </div>
+
+  <!-- 10 CONFORMITÉ -->
+  <div class="section" id="s10">
+    <div class="section-header">
+      <div class="section-num">10</div>
+      <h2>Conformité et Gouvernance</h2>
+    </div>
+    <p>Dans un contexte d'IA liée à la traduction de documents pour des grands comptes et des acteurs régaliens, la conformité n'est pas une surcouche de fin de projet. Elle <strong>conditionne l'acceptabilité commerciale</strong> du produit.</p>
+
+    <h3>Isolation et Moindre Privilège (RBAC)</h3>
+    <p>L'interface impose trois rôles stricts : <strong>Admin</strong> (gestion complète), <strong>Manager</strong> (lecture et rapports), <strong>Viewer</strong> (usage uniquement). Toute modification d'un rôle est historisée. L'<strong>isolation logicielle entre les Tenants</strong> garantit qu'une faille de front-end ne permettra jamais d'exposer les métriques d'une autre entreprise.</p>
+
+    <h3>L'Audit Trail (Journal inaltérable)</h3>
+    <p>Les actions dites "sensibles" (activation d'un nouveau connecteur tiers, export massif de données, suppression de compte) génèrent un log horodaté et stocké en "Write-Once-Read-Many". Ces logs sont la garantie réclamée par les RSSI lors de l'achat d'une solution SaaS.</p>
+
+    <div class="callout callout-warn">
+      <p><strong>Rôle du PO :</strong> Le PO n'est pas un juriste. Son rôle est de travailler main dans la main avec le DPO (Data Protection Officer) pour traduire ces contraintes de conformité austères en <strong>critères d'acceptation techniques et livrables</strong> par les développeurs.</p>
+    </div>
+    <div class="callout callout-note">
+      <p><strong>Hors périmètre :</strong> Les maquettes détaillées et prototypes UI ne sont pas inclus dans ce document. L’objectif ici est de cadrer le delivery, la gouvernance et la priorisation produit.</p>
+    </div>
+  </div>
+
+  <!-- 11 ALIGNEMENT -->
+  <div class="conclusion" id="s11">
+    <h2><span class="section-num">11</span> Pourquoi cette étude de cas répond aux attentes du poste</h2>
+    <p>Ce document n'a pas été généré de manière générique : il a été construit en miroir strict avec la réalité de la fiche de poste et les enjeux connus d'un portefeuille SaaS technique.</p>
+    <div class="conclusion-grid">
+      <div class="conclusion-item">Périmètre <strong>multi-points d'entrée</strong> traité de bout en bout (Add-ins, extensions, connecteurs, API).</div>
+      <div class="conclusion-item">Cadrage de <strong>User stories complètes</strong> avec critères de recette précis, et non des idées floues.</div>
+      <div class="conclusion-item">Logique de conception intégrant la <strong>QA et le support dès le premier jour</strong>, pour fiabiliser le delivery.</div>
+      <div class="conclusion-item">Pilotage par la data : KPIs actionnables, <strong>taxonomie événementielle</strong> claire pour évaluer la valeur.</div>
+      <div class="conclusion-item">Maîtrise du cycle de vie des <strong>Releases</strong>, de la communication au monitoring des régressions.</div>
+      <div class="conclusion-item">Intégration native des enjeux complexes de <strong>sécurité, rôles et conformité (Audit Trail)</strong>.</div>
+    </div>
+    <p style="margin-top:28px;">Je n'ai pas d'expérience directe dans le développement d'Add-ins Microsoft spécifiques. Je ne le cache pas. Ce que cette étude démontre, c'est ma capacité à <strong>aborder un périmètre technique nouveau</strong> avec la maturité d'un Product Owner expérimenté : partir du besoin, unifier les parcours, structurer le backlog, et piloter l'exécution avec rigueur. C'est la garantie d'une montée en compétence rapide et efficace.</p>
+  </div>
+
+  <!-- 12 SOURCES -->
+  <div class="section" id="s12" style="margin-bottom: 40px; border-top:none; padding-top:0;">
+    <div class="section-header">
+      <div class="section-num">12</div>
+      <h2>Sources</h2>
+    </div>
+    <div class="sources-box">
+      <h3>Sources & Documentation étudiées pour ce cas</h3>
+      <ul class="sources-list">
+        <li><strong>Écosystème Produit SYSTRAN :</strong> Étude de l'architecture existante de <em><a href="https://www.chapsvision.com/fr/solution/systran-traduction/">SYSTRAN Translate Pro</a></em> (Extensions navigateur, intégrations Microsoft, API REST) pour ancrer le besoin d'unification dans la réalité du groupe.</li>
+        <li><strong>Recherche métier "Enterprise SaaS" :</strong> Consolidation des bonnes pratiques (RBAC, audit trail/WORM, multitenancy, canary releases). Références : <a href="https://csrc.nist.gov/projects/role-based-access-control">NIST RBAC</a>, <a href="https://learn.microsoft.com/azure/architecture/guide/multitenant/overview">Azure Multitenant</a>, <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html">AWS Object Lock</a>, <a href="https://martinfowler.com/bliki/CanaryRelease.html">Martin Fowler Canary Release</a>.</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
